@@ -6,6 +6,87 @@
         "version": "1.0.0"
     },
     "paths": {
+        "/api/events/{event}/attendees": {
+            "get": {
+                "tags": [
+                    "Attendees"
+                ],
+                "summary": "List attendees of an event",
+                "operationId": "4c9fcd7e7fc64824cd2a7228b4124b85",
+                "parameters": [
+                    {
+                        "name": "event",
+                        "in": "path",
+                        "description": "Event ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of attendees with pagination"
+                    },
+                    "404": {
+                        "description": "Event not found"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Attendees"
+                ],
+                "summary": "Register an attendee for an event",
+                "operationId": "309e623ef10027149215bc99c555c6ca",
+                "parameters": [
+                    {
+                        "name": "event",
+                        "in": "path",
+                        "description": "Event ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "John Doe"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "john@example.com"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Attendee registered successfully"
+                    },
+                    "400": {
+                        "description": "Event full or validation error"
+                    },
+                    "404": {
+                        "description": "Event not found"
+                    }
+                }
+            }
+        },
         "/api/events": {
             "get": {
                 "tags": [
@@ -22,6 +103,10 @@
         }
     },
     "tags": [
+        {
+            "name": "Attendees",
+            "description": "Attendees"
+        },
         {
             "name": "Events",
             "description": "Events"
